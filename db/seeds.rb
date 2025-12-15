@@ -13,7 +13,7 @@ end
 plans = clients.flat_map.with_index do |client, idx|
   3.times.map do |delta|
     Plan.create(client: client,
-      tier: ['premium', 'basic'].sample,
+      tier: [ 'premium', 'basic' ].sample,
       provider: providers[(idx + delta) % providers.length]
     )
   end

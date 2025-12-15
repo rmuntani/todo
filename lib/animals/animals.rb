@@ -1,3 +1,3 @@
-require 'animals/animal'
-require 'animals/dog'
-require 'animals/cat'
+require "animals/animal"
+require "animals/dog"
+require "animals/cat"

@@ -2,8 +2,8 @@
 
 namespace :animals do
   task feed_animals: :environment do
-    require 'animals/animals'
-    require 'foods/foods'
+    require "animals/animals"
+    require "foods/foods"
 
     puts "The dog is going to eat."
     dog = Dog.new

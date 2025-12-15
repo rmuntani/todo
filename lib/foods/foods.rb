@@ -8,4 +8,3 @@ class DogFood; end
 class HumanFood; end
 class Lemon; end
 class Milk; end
-
