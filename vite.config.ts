@@ -10,5 +10,14 @@ export default defineConfig({
 			},
 		}),
 	],
-	build: {},
+	build: {
+		outDir: "app/assets/builds",
+		rollupOptions: {
+			output: {
+				entryFileNames: "application.js",
+				chunkFileNames: "[name].js",
+				assetFileNames: "[name][extname]",
+			},
+		},
+	},
 });
