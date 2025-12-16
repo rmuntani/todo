@@ -26,3 +26,20 @@ has many   <-  belongs to     has many  <-  belongs to
 
     - The queries are exemplified in `rails data:queries`;
 
+- JS:
+
+## How to run the app
+
+First build the docker image:
+
+```bash
+./script/build.sh
+```
+
+After that, you can run the container:
+
+```bash
+./script/serve.sh
+```
+
+I used `script/run.sh` for development.
