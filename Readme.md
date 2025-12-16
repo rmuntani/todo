@@ -1,6 +1,6 @@
 # Healthie Exercise
 
-This repository includes the anwers to Healthie's coding exercise. The Rails app was generated using `rails new`, with the
+This repository includes the answers to the coding exercise. The Rails app was generated using `rails new`, with the
 only option being webpacker for js. You can run the environment with docker using script/run.sh. Remember to run `bundle install`.
 
 The solutions are divided into:
@@ -27,6 +27,10 @@ has many   <-  belongs to     has many  <-  belongs to
     - The queries are exemplified in `rails data:queries`;
 
 - JS:
+    - run the Rails app and access '/' to get to the page that uses compiled assets. The code used for it is inside src/. I used Vite to compile the 
+    code, as that's what I have used recently, but I reckon the setup could be improved. I would usually use tailwind for styling, but I chose to 
+    use only a linter, vite, React, and the confetti library to keep things simple. I opted in favor of doing all the drag and drop manually instead 
+    of using a library, as that seemed like a requirement. I had to look up how Drag and Drop are usually implemented and used https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API as my reference.
 
 ## How to run the app
 
