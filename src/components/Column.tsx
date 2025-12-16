@@ -1,13 +1,19 @@
+export interface Task {
+	id: number;
+	task: string;
+}
+
+export type ColumnType = "todos" | "doing" | "done";
+
+export type DraggedItem = Task & { column: ColumnType };
+
 interface ColumnProps {
-	columnKey: string;
+	column: ColumnType;
 	title: string;
 	tasks: Array<Task>;
-	receiveItem: (event: React.DragEvent, key: string) => void;
-	reorderColumn: (
-		event: React.DragEvent,
-		task: Task & { column: string },
-	) => void;
-	startDrag: (task: Task & { column: string }) => void;
+	receiveItem: (key: ColumnType) => void;
+	reorderColumn: (item: DraggedItem) => void;
+	startDrag: (item: DraggedItem) => void;
 }
 
 export function Column({
@@ -22,7 +28,7 @@ export function Column({
 		<div
 			className="item-column"
 			onDragOver={(event) => event.preventDefault()}
-			onDrop={(event) => receiveItem(column)}
+			onDrop={() => receiveItem(column)}
 		>
 			<h1>{title}</h1>
 			<hr />
@@ -31,7 +37,7 @@ export function Column({
 					<div
 						className="item"
 						draggable
-						onDrop={(event) => reorderColumn({ id, task, column })}
+						onDrop={() => reorderColumn({ id, task, column })}
 						onDragStart={() => startDrag({ id, task, column })}
 						key={id}
 					>

@@ -1,6 +1,7 @@
 import "./App.css";
 import { Column } from "./components/Column";
-import { useState, useEffect } from "react";
+import type { Task, ColumnType, DraggedItem } from "./components/Column";
+import { useState, useEffect, type FormEvent } from "react";
 
 // I had to Google for this lib https://www.npmjs.com/package/react-confetti
 import Confetti from "react-confetti";
@@ -14,25 +15,18 @@ interface Tasks {
 	done: Array<Task>;
 }
 
-interface Task {
-	id: number;
-	task: string;
-}
-
-interface ColumnTypes {
-	column: "todos" | "doing" | "done" | null;
-}
-
-type DraggedItem = Task & ColumnTypes;
-
 function App() {
 	const [tasks, updateTasks] = useState<Tasks>({
 		todos: [],
 		doing: [],
 		done: [],
 	});
-	const [dragged, dragItem] = useState<DraggedItem>({ task: "", column: null });
-	const [confettiEnabled, enableConfetti] = useState<bool>(false);
+	const [dragged, dragItem] = useState<DraggedItem>({
+		id: 0,
+		task: "",
+		column: "todos",
+	});
+	const [confettiEnabled, enableConfetti] = useState<boolean>(false);
 
 	useEffect(() => {
 		const timer = setTimeout(() => enableConfetti(false), 5000);
@@ -42,18 +36,22 @@ function App() {
 
 	const totalItems = () =>
 		tasks.todos.length + tasks.doing.length + tasks.done.length;
-	const addTodo = (event) => {
-		const newTodo: string | null = event.target.todo.value;
+	const addTodo = (event: FormEvent<HTMLFormElement>) => {
+		const eventTarget = event.target as HTMLFormElement;
+		const input = eventTarget.elements.namedItem("todo") as HTMLInputElement;
+		const newTodo: string | null = input?.value;
 		event.preventDefault();
 
-		if (newTodo !== "") {
+		if (newTodo !== "" || newTodo === null) {
 			const taskId = totalItems() + 1;
 			updateTasks({
 				...tasks,
 				todos: [...tasks.todos, { task: newTodo, id: taskId }],
 			});
+		}
 
-			event.target.todo.value = "";
+		if (input) {
+			input.value = "";
 		}
 	};
 
@@ -61,7 +59,7 @@ function App() {
 		dragItem(item);
 	};
 
-	const receiveItem = (newColumn: string) => {
+	const receiveItem = (newColumn: ColumnType) => {
 		const { task, column, id } = dragged;
 
 		if (newColumn === column) return;
@@ -78,10 +76,10 @@ function App() {
 		if (newColumn === "done") {
 			enableConfetti(true);
 		}
-		dragItem({ task: "", column: null, id: 0 });
+		dragItem({ task: "", column: "todos", id: 0 });
 	};
 
-	const reorderColumn = (target) => {
+	const reorderColumn = (target: DraggedItem) => {
 		const { column: targetColumn, id: targetId } = target;
 		const { task, column, id } = dragged;
 
@@ -98,7 +96,7 @@ function App() {
 			...tasks,
 			[column]: updatedColumn,
 		});
-		dragItem({ task: "", column: null, id: 0 });
+		dragItem({ task: "", column: "todos", id: 0 });
 	};
 
 	return (
