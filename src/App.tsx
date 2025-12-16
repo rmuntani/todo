@@ -133,8 +133,12 @@ function App() {
 
 			<section className="form">
 				<form onSubmit={addTodo}>
-					<textarea name="todo" />
-					<button type="submit">Add</button>
+					<div>
+						<textarea className="text-area" name="todo" />
+					</div>
+					<div>
+						<button type="submit">Add</button>
+					</div>
 				</form>
 			</section>
 		</>
